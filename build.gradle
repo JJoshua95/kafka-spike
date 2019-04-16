@@ -1,0 +1,31 @@
+plugins {
+	id 'org.springframework.boot' version '2.1.4.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'spike.kafka.streams'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	kafkaVersion = "2.0.1"
+	kafkaScalaVersion='2.12'
+}
+
+dependencies {
+
+	// kafka
+	compile "org.apache.kafka:kafka_${kafkaScalaVersion}:${kafkaVersion}"
+	compile "org.apache.kafka:kafka-streams:${kafkaVersion}"
+	compile "org.apache.kafka:kafka-clients:${kafkaVersion}"
+	compile "org.apache.kafka:kafka_2.12:${kafkaVersion}"
+	
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
