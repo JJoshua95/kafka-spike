@@ -27,6 +27,8 @@ public class KafkaStreamApp {
 
         final StreamsBuilder builder = new StreamsBuilder();
 
+//        Example of how to set up KStreams
+
 //        final KStream<String, String> inputStream1 = builder.stream(
 //                "streams-input",
 //                Consumed.with(Serdes.String(),
@@ -41,18 +43,22 @@ public class KafkaStreamApp {
 //                )
 //        );
 
-        KTable<String, String> inputStream1 = builder.table(
+//      Example of how to set up KTables
+
+        KTable<String, String> inputKTable1 = builder.table(
                 "streams-input",
                 Consumed.with(Serdes.String(),
                         Serdes.String()
                 )
         );
 
-        KTable<String, String> inputStream2 = builder.table(
+        KTable<String, String> inputKTable2 = builder.table(
                 "streams-input-2",
                 Consumed.with(Serdes.String(),
                         Serdes.String())
         );
+
+//        Example of joining kstreams
 
 //        KStream<String, String> outputStream = inputStream1.leftJoin(inputStream2,
 //                (leftValue, rightValue) -> "left=" + leftValue + ", right=" + rightValue, /* ValueJoiner */
@@ -63,11 +69,12 @@ public class KafkaStreamApp {
 //                        Serdes.String())  /* right value */
 //        );
 
-        KTable<String, String> outputStream = inputStream1.leftJoin(inputStream2,
+//        Example of joining KTables
+
+        KTable<String, String> outputStream = inputKTable1.leftJoin(inputKTable2,
                 (left, right) -> "left:" + left + ", right:" + right
         );
 
-        // write the enriched order to the enriched-order topic
         outputStream.toStream().to("streams-output", Produced.with(Serdes.String(), Serdes.String()));
 
         KafkaStreams streams = new KafkaStreams(builder.build(), streamsConfiguration);

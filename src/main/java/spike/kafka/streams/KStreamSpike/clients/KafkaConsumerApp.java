@@ -23,8 +23,8 @@ public class KafkaConsumerApp {
 
         ArrayList<String> topics = new ArrayList<String>();
         topics.add("my-replicated-topic");
-        //topics.add("my-topic");
         topics.add("test");
+        //topics.add("my-topic");
 
         myConsumer.subscribe(topics);
 
